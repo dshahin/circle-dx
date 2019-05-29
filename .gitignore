@@ -1,0 +1,14 @@
+.sfdx
+.vscode
+deploy
+test_results
+test_results/test-result.txt
+node_modules
+scratch_user_info*.json
+scratch_user_info.json
+scratch_org_info.json
+scratch_auth_info.json
+puppet/screenshots
+artifacts
+pmd/results
+

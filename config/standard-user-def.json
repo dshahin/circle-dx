@@ -1,0 +1,14 @@
+{
+    "Username": "standdardUser@codescience.com",
+    "LastName": "Standard",
+    "FirstName": "Standard",
+    "Email": "standard@codescience.com",
+    "Alias": "stndrd1",
+    "TimeZoneSidKey": "America/Los_Angeles",
+    "LocaleSidKey": "en_US",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "en_US",
+    "profileName": "Standard User",
+    "permsets": ["Random_Dog"],
+    "generatePassword": true
+}

@@ -1,0 +1,64 @@
+version: 2
+jobs: 
+  build: 
+    docker:
+      - image: circleci/node:8.9.4-browsers
+    steps: 
+      - checkout
+      - run: 
+          command: |
+              wget -qO- https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz | tar xJf -
+              ./sfdx-cli-*/install
+          name: "Install sfdx"
+      - run:
+          command: |
+              npm install
+              mkdir -p /tmp/artifacts/test_results
+          name: "Create Artifacts Dir"
+      - run: 
+          command: |
+              echo $SFDXURL_HUB > /tmp/sfdx.url
+              sfdx force:auth:sfdxurl:store -f /tmp/sfdx.url -a circle_build_$CIRCLE_BUILD_NUM --setdefaultdevhubusername
+              echo $SFDXURL_PKG > /tmp/sfdx_pkg.url
+              sfdx force:auth:sfdxurl:store -f /tmp/sfdx_pkg.url -a pkg_org
+          name: "Authenticate to DevHub and PKG orgs"
+      - run: 
+          command: "./dx-utils/setup_scratch_org.sh circle_build_$CIRCLE_BUILD_NUM do_not_open_browser"
+          name: "Setup Scratch Org"
+      - run:
+          command: |
+            #run apex unit tests
+            sfdx force:apex:test:run --wait 6 --resultformat tap --codecoverage -d test_results
+            dx-utils/parse_test_results.js >> /tmp/artifacts/test_results/test-result.txt
+          name: "Run Unit Tests"
+      - store_test_results:
+          path: test_results
+      - store_artifacts: 
+          destination: test-result.txt
+          path: test_results/test-result.txt
+      - run: 
+          command: "./dx-utils/delete_scratch_org.sh circle_build_$CIRCLE_BUILD_NUM -p\n"
+          name: "Delete Scratch Org"
+          when: always
+      - run: 
+          command: |
+              #convert DX to legacy metadata
+              ./dx-utils/convert_to_metadata.sh
+
+              cp -pr deploy /tmp/artifacts/deploy
+              
+              #update this to whatever the packaging branch should be!
+              if [[ $CIRCLE_BRANCH == "master" ]];
+              then 
+                #deploy master branch to pkg org
+                echo "deploy $CIRCLE_BRANCH to pkg org"
+                ./dx-utils/deploy.sh pkg_org 
+              else
+                #deploy CHECKONLY to other branches
+                echo "Not on Master Branch CHECKONLY - Deploy $CIRCLE_BRANCH to pkg org"
+                ./dx-utils/deploy.sh pkg_org checkonly
+              fi
+          name: "Deploy To Golden Packaging Org"
+      - store_artifacts: 
+          destination: ./artifacts
+          path: /tmp/artifacts

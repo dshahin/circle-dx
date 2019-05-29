@@ -1,0 +1,18 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <ltng:require scripts="{!$Resource.ChartJS}" afterScriptsLoaded="{!c.generateChart}" />
+    <aura:attribute name="symbol" type="String" default="CRM" />
+    <aura:attribute name="imageURL" type="String" default="https://storage.googleapis.com/iex/api/logos/CRM.png" />
+    <aura:attribute name="linechart" type="Object" />
+    <aura:handler name="change" value="{!v.symbol}" action="{!c.generateChart}" />
+    <div class="slds-box">
+        <img class="logo" src="{!v.imageURL}" />
+        <lightning:input type="String" aura:id="symbol" value="{!v.symbol}" />
+        <canvas aura:id="linechart" height="300" width="450"></canvas>
+        <div>
+            Data provided for free by
+            <a href="https://iextrading.com/developer" target="_blank">IEX</a>. View <a href="https://iextrading.com/api-exhibit-a/" target="_blank">IEX’s Terms of Use</a>.
+        </div>
+    </div>
+
+
+</aura:component>

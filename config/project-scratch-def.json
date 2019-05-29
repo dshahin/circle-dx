@@ -1,0 +1,12 @@
+{
+    "orgName": "circle-dx",
+    "edition": "Developer",
+    "hasSampleData": true,
+    "settings": {
+        "orgPreferenceSettings": {
+            "chatterEnabled": true,
+            "s1DesktopEnabled": true,
+            "s1EncryptedStoragePref2": false
+        }
+    }
+}
