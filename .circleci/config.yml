@@ -23,13 +23,12 @@ jobs:
               sfdx force:auth:sfdxurl:store -f /tmp/sfdx_pkg.url -a pkg_org
           name: "Authenticate to DevHub and PKG orgs"
       - run: 
-          command: "./dx-utils/setup_scratch_org.sh circle_build_$CIRCLE_BUILD_NUM do_not_open_browser"
+          command: "./dx-scripts/setup_scratch.sh circle_build_$CIRCLE_BUILD_NUM do_not_open_browser"
           name: "Setup Scratch Org"
       - run:
           command: |
             #run apex unit tests
             sfdx force:apex:test:run --wait 6 --resultformat tap --codecoverage -d test_results
-            dx-utils/parse_test_results.js >> /tmp/artifacts/test_results/test-result.txt
           name: "Run Unit Tests"
       - store_test_results:
           path: test_results
@@ -37,7 +36,7 @@ jobs:
           destination: test-result.txt
           path: test_results/test-result.txt
       - run: 
-          command: "./dx-utils/delete_scratch_org.sh circle_build_$CIRCLE_BUILD_NUM -p\n"
+          command: "sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM"
           name: "Delete Scratch Org"
           when: always
       - run: 
