@@ -1,5 +1,5 @@
 # circle-dx
-![CircleCI](https://circleci.com/gh/CodeScience/hello-dx.svg?style=svg&circle-token=4a464ee69ca07cf45740bff043d8ffa19fb8c722)
+[![CircleCI](https://circleci.com/gh/dshahin/circle-dx.svg?style=svg)](https://circleci.com/gh/dshahin/circle-dx)
 
 
 
