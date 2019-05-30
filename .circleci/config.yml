@@ -43,9 +43,6 @@ jobs:
           command: |
               #convert DX to legacy metadata
               sfdx force:source:convert -r force-app/main/default/ -d /tmp/artifacts/deploy
-
-              #copy deployed metadata to artifacts
-              cp -pr deploy /tmp/artifacts/deploy
               
               #update this to whatever the packaging branch should be!
               if [[ $CIRCLE_BRANCH == "master" ]];
