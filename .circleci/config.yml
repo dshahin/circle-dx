@@ -51,7 +51,7 @@ jobs:
               then 
                 #deploy master branch to pkg org
                 echo "deploy $CIRCLE_BRANCH to pkg org"
-                ./dx-scripts/deploy.sh pkg_org checkonly
+                ./dx-scripts/deploy.sh pkg_org
               else
                 #deploy CHECKONLY to other branches
                 echo "Not on Master Branch CHECKONLY - Deploy $CIRCLE_BRANCH to pkg org"
