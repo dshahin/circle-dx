@@ -51,11 +51,11 @@ jobs:
               then 
                 #deploy master branch to pkg org
                 echo "deploy $CIRCLE_BRANCH to pkg org"
-                ./dx-utils/deploy.sh pkg_org 
+                ./dx-scripts/deploy.sh pkg_org checkonly
               else
                 #deploy CHECKONLY to other branches
                 echo "Not on Master Branch CHECKONLY - Deploy $CIRCLE_BRANCH to pkg org"
-                ./dx-utils/deploy.sh pkg_org checkonly
+                ./dx-scripts/deploy.sh pkg_org checkonly
               fi
           name: "Deploy To Golden Packaging Org"
       - store_artifacts: 
