@@ -1,7 +1,7 @@
 @isTest
 public with sharing class SampleTest {
     @isTest
-    public static void testApexGetDog_success() {
+    public static void testMeaningless_success() {
 
         Test.startTest();
 
