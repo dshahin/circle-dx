@@ -57,7 +57,7 @@ jobs:
                 echo "Not on Master Branch CHECKONLY - Deploy $CIRCLE_BRANCH to pkg org"
                 ./dx-scripts/deploy.sh pkg_org checkonly
               fi
-          name: "Deploy To Golden Packaging Org"
+          name: "Deploy To Packaging Org"
       - store_artifacts: 
           destination: ./artifacts
           path: /tmp/artifacts
