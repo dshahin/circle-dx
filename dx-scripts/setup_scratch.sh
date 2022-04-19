@@ -5,6 +5,14 @@
 #This script should not need to be changed
 #please add custom config to customize_scratch_org.sh
 
+
+# Exit script if a statement returns a non-true return value.
+set -o errexit
+# Use the error status of the first failure, rather than that of the last item in a pipeline.
+set -o pipefail
+
+
+
 if [ $# -lt 1 ]
 then
     echo Usage: setup_scratch_org.sh alias
